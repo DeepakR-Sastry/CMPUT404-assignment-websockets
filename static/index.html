@@ -252,15 +252,19 @@
     });
     
 
-    function updateWorld(objs) {
-        for (var key in objs) {
-            world[key] = objs[key];
+
+    // this function will take the json object
+    // and set the world dict
+    function updateWorld(data) {
+        for (var key in data) {
+            world[key] = data[key];
         }
         drawNextFrame();
     }
         
+    // will check our flag var and send any changes as a json
     function update(socket) {
-        if (changes && changed){
+        if (changed){
             changed = false;
             socket.send(JSON.stringify(changes))
             changes = {};
@@ -292,6 +296,8 @@
 
     wsSetup();
 
+
+    // need to update the socket every 1000/30 ms
     setInterval(() => { update(socket) }, 1000/30.0);
     </script>
 </body>
